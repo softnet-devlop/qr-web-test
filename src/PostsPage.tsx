@@ -39,23 +39,31 @@
 //   return <h1>Loading...</h1>;
 // };
 
-import { useState, useEffect, useRef } from "react";
-import { Html5Qrcode } from "html5-qrcode";
-import QRCode, { QRCodeCanvas } from "qrcode.react";
+import { Html5Qrcode } from 'html5-qrcode';
+import QRCode, { QRCodeCanvas } from 'qrcode.react';
+import { useState, useEffect, useRef } from 'react';
 
 interface IData {
   code_seqno: number;
   qrCodeEncoder: string;
   macAddress: string;
+  memberSeqNo: number;
+  loginId: string;
 }
 
 export const PostsPage = () => {
   const [qrCodeList, setQRCodeList] = useState<IData[]>([]);
-
   useEffect(() => {
-    fetch("http://localhost:8282/qrcode/get-qr")
+    fetch('http://localhost:8282/qrcode/get-qr')
       .then((response) => response.json())
-      .then((data) => setQRCodeList(data));
+
+      .then((data) => {
+        const encodedData = data.map((item: IData) => ({
+          ...item,
+          loginId: encodeURIComponent(item.loginId),
+        }));
+        setQRCodeList(encodedData);
+      });
   }, []);
 
   console.log(qrCodeList);
@@ -174,12 +182,13 @@ export const PostsPage = () => {
         <div className="w-80">02</div>
         <div className="w-80">03</div>
       </div> */}
-      <div className="flex flex-wrap w-full my-4">
+      <div className='flex flex-wrap w-full my-4'>
         {qrCodeList &&
-          qrCodeList.map(({ code_seqno, macAddress }) => (
-            <div key={code_seqno} className="px-2">
+          qrCodeList.map(({ code_seqno, macAddress, memberSeqNo, loginId }) => (
+            <div key={code_seqno} className='px-2'>
               <QRCodeCanvas
-                value={`https://www.inphrcare.com?mac_address=${macAddress}`}
+                // value={`https://www.inphrcare.com?mac_address=${macAddress}`}
+                value={`inPHRTest://open?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`}
                 size={120}
               />
             </div>
