@@ -43,7 +43,7 @@ import { Html5Qrcode } from 'html5-qrcode';
 import QRCode, { QRCodeCanvas } from 'qrcode.react';
 import { useState, useEffect, useRef } from 'react';
 
-interface IData {
+export interface IData {
   code_seqno: number;
   qrCodeEncoder: string;
   macAddress: string;
@@ -152,7 +152,9 @@ export const PostsPage = () => {
   //   }
   // };
 
-  const qrUrl = `https://www.inphrcare.com`;
+  // const qrUrl = `https://www.inphrcare.com`;
+
+  // const qrUrl = useAppRedirect();
 
   return (
     <>
@@ -188,7 +190,9 @@ export const PostsPage = () => {
             <div key={code_seqno} className='px-2'>
               <QRCodeCanvas
                 // value={`https://www.inphrcare.com?mac_address=${macAddress}`}
-                value={`inPHRTest://open?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`}
+                // value={`inphrtest://open?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`}
+
+                value={`http://10.20.0.59:5173/appRedirect?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`}
                 size={120}
               />
             </div>
