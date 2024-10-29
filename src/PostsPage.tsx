@@ -58,7 +58,7 @@ export const PostsPage = () => {
       .then((response) => response.json())
 
       .then((data) => {
-        const encodedData = data.map((item: IData) => ({
+        const encodedData = data.slice(10, 40).map((item: IData) => ({
           ...item,
           loginId: encodeURIComponent(item.loginId),
         }));
@@ -187,14 +187,16 @@ export const PostsPage = () => {
       <div className='flex flex-wrap w-full my-4'>
         {qrCodeList &&
           qrCodeList.map(({ code_seqno, macAddress, memberSeqNo, loginId }) => (
-            <div key={code_seqno} className='px-2'>
+            <div key={code_seqno} className='p-2'>
               <QRCodeCanvas
                 // value={`https://www.inphrcare.com?mac_address=${macAddress}`}
                 // value={`inphrtest://open?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`}
 
                 value={`http://10.20.0.59:5173/appRedirect?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`}
-                size={120}
+                size={80}
               />
+              <p className='text-sm'>{loginId}</p>
+              <p className='text-sm'>{macAddress}</p>
             </div>
           ))}
       </div>

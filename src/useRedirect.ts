@@ -17,7 +17,7 @@ export const useAppRedirect = ({
   loginId,
 }: QRCodeItem) => {
   //앱 스키마 url
-  const appScheme = `inphrtest://open?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`;
+  const appScheme = `inphr://open?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`;
   //스토어 url
   const playStoreUrl =
     'https://play.google.com/store/apps/details?id=com.softnet.inPHRCare&pli=1';
@@ -30,17 +30,17 @@ export const useAppRedirect = ({
     //대소문자 구분 없이 Android, ios 확인하고 true/false 반환
     const isAndroid = /Android/i.test(navigator.userAgent);
     const isIOS = /iPhone|iPad/i.test(navigator.userAgent);
-    const isChrome = /Chrome/i.test(navigator.userAgent);
+    // const isChrome = /Chrome/i.test(navigator.userAgent);
 
     const storeUrl = isAndroid ? playStoreUrl : isIOS ? appleStoreUrl : null;
 
-    const startTime = Date.now();
+    // const startTime = Date.now();
     console.log(appScheme);
 
     // Android Intent URL 생성
-    const intentUrl = `intent://open?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}#Intent;scheme=inphrtest;package=com.softnet.inPHRCare;S.browser_fallback_url=${encodeURIComponent(
-      playStoreUrl
-    )};end`;
+    // const intentUrl = `intent://open?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}#Intent;scheme=inphrtest;package=com.softnet.inPHRCare;S.browser_fallback_url=${encodeURIComponent(
+    //   playStoreUrl
+    // )};end`;
 
     //   if (isAndroid && isChrome) {
     //     // Android Chrome에서 Intent URL 사용
@@ -98,7 +98,7 @@ export const useAppRedirect = ({
 
       // 이벤트 리스너 제거
       window.removeEventListener('blur', handleBlur);
-    }, 2000); // 2초 후 상태 체크
+    }, 2000);
   };
 
   return openApp;
