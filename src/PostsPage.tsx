@@ -39,8 +39,8 @@
 //   return <h1>Loading...</h1>;
 // };
 
-import { QRCodeCanvas } from "qrcode.react";
-import { useState, useEffect, useRef } from "react";
+import { QRCodeCanvas } from 'qrcode.react';
+import { useState, useEffect } from 'react';
 
 export interface IData {
   code_seqno: number;
@@ -53,11 +53,11 @@ export interface IData {
 export const PostsPage = () => {
   const [qrCodeList, setQRCodeList] = useState<IData[]>([]);
   useEffect(() => {
-    fetch("https://compass-qr.inphrcare.com/qrcode/get-qr")
+    fetch('https://compass-qr.inphrcare.com/qrcode/get-qr')
       .then((response) => response.json())
 
       .then((data) => {
-        const encodedData = data.slice(10, 40).map((item: IData) => ({
+        const encodedData = data.map((item: IData) => ({
           ...item,
           loginId: encodeURIComponent(item.loginId),
         }));
@@ -69,16 +69,16 @@ export const PostsPage = () => {
 
   return (
     <>
-      <div className="flex flex-wrap w-full my-4">
+      <div className='flex flex-wrap w-full my-4'>
         {qrCodeList &&
           qrCodeList.map(({ code_seqno, macAddress, memberSeqNo, loginId }) => (
-            <div key={code_seqno} className="p-2">
+            <div key={code_seqno} className='p-2'>
               <QRCodeCanvas
                 value={`https://compass-qr-web.inphrcare.com/appRedirect?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`}
                 size={80}
               />
-              <p className="text-sm">{loginId}</p>
-              <p className="text-sm">{macAddress}</p>
+              <p className='text-sm'>{loginId}</p>
+              <p className='text-sm'>{macAddress}</p>
             </div>
           ))}
       </div>

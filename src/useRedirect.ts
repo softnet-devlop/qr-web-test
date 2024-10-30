@@ -21,18 +21,22 @@ export const useAppRedirect = ({
   //스토어 url
   const playStoreUrl =
     'https://play.google.com/store/apps/details?id=com.softnet.inPHRCare&pli=1';
-  const appleStoreUrl = 'https://apps.apple.com/kr/app/inphr/id1277557778';
+  // const appleStoreUrl = 'https://apps.apple.com/kr/app/inphr/id1277557778';
 
   const openApp = () => {
     //navigator.userAgent: 사용 브라우저, 운영체제, 기기 정보 조회 가능 Mozilla/5.0 (Linux; Android 11; Pixel 3 XL)
     console.log(navigator.userAgent);
 
     //대소문자 구분 없이 Android, ios 확인하고 true/false 반환
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    const isIOS = /iPhone|iPad/i.test(navigator.userAgent);
+    // const isAndroid = /Android/i.test(navigator.userAgent);
+    // const isIOS = /iPhone|iPad/i.test(navigator.userAgent);
     // const isChrome = /Chrome/i.test(navigator.userAgent);
 
-    const storeUrl = isAndroid ? playStoreUrl : isIOS ? appleStoreUrl : null;
+    // const storeUrl = isAndroid
+    //   ? playStoreUrl
+    //   : isIOS
+    //   ? appleStoreUrl
+    //   : playStoreUrl;
 
     // const startTime = Date.now();
     console.log(appScheme);
@@ -91,9 +95,7 @@ export const useAppRedirect = ({
         console.log('앱이 설치되어 실행');
       } else {
         // 설치되어 있지 않은 경우 스토어로 리다이렉트
-        if (storeUrl) {
-          window.location.href = storeUrl;
-        }
+        window.location.href = playStoreUrl;
       }
 
       // 이벤트 리스너 제거
