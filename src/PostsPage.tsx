@@ -67,20 +67,27 @@ export const PostsPage = () => {
 
   console.log(qrCodeList);
 
+  const bandNoList = [25, 26, 27, 28, 29, 30, 40, 41, 42, 43];
+
   return (
     <>
       <div className='flex flex-wrap w-full my-4'>
         {qrCodeList &&
-          qrCodeList.map(({ code_seqno, macAddress, memberSeqNo, loginId }) => (
-            <div key={code_seqno} className='p-2'>
-              <QRCodeCanvas
-                value={`https://compass-qr-web.inphrcare.com/appRedirect?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`}
-                size={80}
-              />
-              <p className='text-sm'>{loginId}</p>
-              <p className='text-sm'>{macAddress}</p>
-            </div>
-          ))}
+          qrCodeList.map(
+            ({ code_seqno, macAddress, memberSeqNo, loginId }, index) => (
+              <div key={code_seqno} className='p-8'>
+                <QRCodeCanvas
+                  value={`https://compass-qr-web.inphrcare.com/appRedirect?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`}
+                  size={100}
+                />
+                <p className='font-bold text-sm'>
+                  bandNo: {index < bandNoList.length ? bandNoList[index] : ''}
+                </p>
+                <p className='font-bold text-sm'>loginId: {loginId}</p>
+                <p className=' font-thin text-sm'>{macAddress}</p>
+              </div>
+            )
+          )}
       </div>
     </>
   );
