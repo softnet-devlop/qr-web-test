@@ -57,7 +57,7 @@ export const PostsPage = () => {
       .then((response) => response.json())
 
       .then((data) => {
-        const encodedData = data.map((item: IData) => ({
+        const encodedData = data.slice(0, 10).map((item: IData) => ({
           ...item,
           loginId: encodeURIComponent(item.loginId),
         }));
@@ -70,25 +70,31 @@ export const PostsPage = () => {
   const bandNoList = [25, 26, 27, 28, 29, 30, 40, 41, 42, 43];
 
   return (
-    <>
-      <div className='flex flex-wrap w-full my-4'>
+    <div className='flex justify-center items-center w-screen my-4'>
+      <div className='grid grid-cols-4 gap-4'>
         {qrCodeList &&
           qrCodeList.map(
             ({ code_seqno, macAddress, memberSeqNo, loginId }, index) => (
-              <div key={code_seqno} className='p-8'>
+              <div
+                key={code_seqno}
+                className='p-8 flex flex-col min-w-[240px] w-fit justify-center items-center border'
+              >
                 <QRCodeCanvas
                   value={`https://compass-qr-web.inphrcare.com/appRedirect?mac_address=${macAddress}&member_seqNo=${memberSeqNo}&login_id=${loginId}`}
                   size={100}
                 />
-                <p className='font-bold text-sm'>
-                  bandNo: {index < bandNoList.length ? bandNoList[index] : ''}
-                </p>
-                <p className='font-bold text-sm'>loginId: {loginId}</p>
-                <p className=' font-thin text-sm'>{macAddress}</p>
+                <div className='pt-4 font-bold text-sm'>
+                  <p>
+                    밴드번호:{' '}
+                    {index < bandNoList.length ? bandNoList[index] : ''}
+                  </p>
+                  <p>아이디: {loginId}</p>
+                  <p>맥주소: {macAddress}</p>
+                </div>
               </div>
             )
           )}
       </div>
-    </>
+    </div>
   );
 };
